@@ -39,3 +39,16 @@ Sampah menjadi permasalahan mendesak di Yogyakarta dengan **270.153 ton sampah**
 🛠 **Logam** – Kaleng dan barang berbahan dasar logam.  
 
 🔍 Dengan teknologi ini, Sortify dapat membantu masyarakat **lebih mudah memilah sampah**, mengurangi jumlah sampah yang masuk ke TPA, serta meningkatkan efisiensi **daur ulang dan keberlanjutan lingkungan**.  
+
+---
+
+## 🗂️ **Use Case Diagram**  
+
+![WhatsApp Image 2025-02-20 at 22 27 08](https://github.com/user-attachments/assets/23c76db2-9311-4468-bc2c-163d08cd76ba)
+
+---
+
+## 🔗 **Entity Relationship Diagram**  
+
+![WhatsApp Image 2025-02-20 at 22 27 07](https://github.com/user-attachments/assets/3982c8a8-96a6-4665-a798-d324d30b9433)
+
