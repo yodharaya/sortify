@@ -1,0 +1,34 @@
+name: Deploying Sortify To VPS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: |
+          set -e
+          echo "Starting dependency installation..."
+          npm install
+          echo "Dependency installation completed."
+
+      - name: Run build
+        run: |
+          set -e
+          echo "Starting build process..."
+          npm run build
+          echo "Build process completed successfully."
