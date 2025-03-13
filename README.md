@@ -48,7 +48,7 @@ Sampah menjadi permasalahan mendesak di Yogyakarta dengan **270.153 ton sampah**
 
 ---
 
-## 🔗 **Entity Relationship Diagram**  
+## 🔗 **Entity Relationship Diagrams**  
 
 ![WhatsApp Image 2025-02-20 at 22 27 07](https://github.com/user-attachments/assets/3982c8a8-96a6-4665-a798-d324d30b9433)
 
