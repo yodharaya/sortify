@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import { twMerge } from "tailwind-merge";
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -22,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${poppins.variable} antialiased`}
+        className={twMerge(`${poppins.variable} antialiased`, "w-screen h-screen")}
       >
         {children}
       </body>
