@@ -5,8 +5,6 @@ import { twMerge } from "tailwind-merge";
 
 const poppins = Poppins({
   subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-poppins',
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
 });
 
@@ -23,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={twMerge(`${poppins.variable} antialiased`, "w-screen h-screen")}
+        className={twMerge(`${poppins.className} antialiased`, "w-screen h-screen", "bg-shade-white")}
       >
         {children}
       </body>

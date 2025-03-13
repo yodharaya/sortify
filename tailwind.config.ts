@@ -18,6 +18,7 @@ export default {
         shade: {
           gray: "#C9C9CB",
           white: "#F1F2F4",
+          black: "#000000"
         },
         success: {
           500: "#047857"
