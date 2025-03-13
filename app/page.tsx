@@ -1,5 +1,6 @@
 import MainHero from "@/components/hero/main";
 import Navbar from "@/components/navbar/index";
+import AboutSection from "@/components/section/about";
 import ProgressSection from "@/components/section/progress";
 import { twMerge } from "tailwind-merge";
 
@@ -13,6 +14,7 @@ export default function Home() {
           <MainHero />
         </section>
         <ProgressSection />
+        <AboutSection />
 
       </div>
     </div>
