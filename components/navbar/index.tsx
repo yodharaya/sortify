@@ -5,7 +5,7 @@ import Notification from "./notification";
 
 export default function Navbar() {
   return (
-    <nav className={twMerge("w-full", "flex flex-row justify-between items-center")}>
+    <nav className={twMerge("w-full", "flex flex-row justify-between items-center", "px-6")}>
 
       <Logo size={120} />
       <div className={twMerge("flex flex-row items-center gap-x-5")}>
