@@ -15,7 +15,16 @@ export default {
           500: "#578FCA",
           700: "#3674B5",
         },
-        background: "var(--background)",
+        shade: {
+          gray: "#C9C9CB",
+          white: "#F1F2F4",
+        },
+        success: {
+          500: "#047857"
+        },
+        error: {
+          500: "#D92D20"
+        },
         foreground: "var(--foreground)",
       },
     },
