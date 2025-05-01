@@ -25,9 +25,13 @@ const hashPassword = async (password: string): Promise<string> => {
 };
 
 export const login = async (email: string, password: string) => {
-  const response = await axios.post(`${URL}/auth/login`, {
-    email,
-    password,
-  });
+  const response = await axios.post(
+    `${URL}/auth/login`,
+    {
+      email,
+      password,
+    },
+    { withCredentials: true }
+  );
   return response.data;
 };
