@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
@@ -15,7 +17,7 @@ export default function LoginPage() {
   };
 
   const handleSignUp = () => {
-    router.push("/register");
+    router.push("/signup");
   };
 
   return (

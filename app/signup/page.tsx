@@ -133,7 +133,7 @@ export default function RegisterPage() {
         <div className="mt-6 text-center">
           <button
             type="button"
-            onClick={() => router.push("/")}
+            onClick={() => router.push("/login")}
             className="text-black font-medium hover:underline"
           >
             Log In
