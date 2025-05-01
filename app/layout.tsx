@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { twMerge } from "tailwind-merge";
+import { Toaster } from 'react-hot-toast';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -23,6 +24,13 @@ export default function RootLayout({
       <body
         className={twMerge(`${poppins.className} antialiased`, "w-screen h-screen", "bg-shade-white")}
       >
+        <Toaster position="bottom-right" toastOptions={{
+          duration: 4000,
+          style: {
+            background: '#363636',
+            color: '#fff',
+          },
+        }} />
         {children}
       </body>
     </html>

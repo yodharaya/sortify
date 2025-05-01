@@ -1,9 +1,11 @@
-// app/register/page.tsx
 "use client";
 
 import Image from "next/image";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toastServerError } from "@/helpers/server";
+import { signup } from "@/helpers/auth";
+import toast from "react-hot-toast";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -11,16 +13,16 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
 
-    if (password !== confirmPassword) {
-      alert("Passwords do not match");
-      return;
+      await signup(username, password, username);
+      toast.success("Validation email sent");
+      router.push("/login");
+    } catch (error) {
+      toastServerError(error);
     }
-
-    // Simulasi pendaftaran berhasil
-    router.push("/home");
   };
 
   return (
