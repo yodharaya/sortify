@@ -1,26 +1,31 @@
-import Image from "next/image";
-import React from "react";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+// app/register/page.tsx
+"use client";
 
-export default function LoginPage() {
+import Image from "next/image";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function RegisterPage() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push("/home");
-  };
 
-  const handleSignUp = () => {
-    router.push("/register");
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
+    // Simulasi pendaftaran berhasil
+    router.push("/home");
   };
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 px-4 py-6">
-      {/* Header dengan back button dan logo */}
+      {/* Header dengan tombol kembali dan logo */}
       <div className="flex justify-between items-center mb-8">
         <button onClick={() => router.back()} className="p-2">
           <svg
@@ -49,12 +54,12 @@ export default function LoginPage() {
         </div>
       </div>
 
-      {/* Konten Login */}
+      {/* Konten Registrasi */}
       <div className="flex-1">
-        <h1 className="text-4xl font-bold mb-2">Welcome Back</h1>
-        <p className="text-xl text-gray-600 mb-8">Log In to your account</p>
+        <h1 className="text-3xl font-bold mb-2">Register Here</h1>
+        <p className="text-gray-600 mb-6">Create your own account</p>
 
-        <form onSubmit={handleLogin} className="space-y-4">
+        <form onSubmit={handleSignUp} className="space-y-4">
           {/* Username Input */}
           <div className="relative">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
@@ -71,6 +76,7 @@ export default function LoginPage() {
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Username"
               className="w-full pl-12 pr-4 py-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
 
@@ -90,40 +96,47 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Password"
               className="w-full pl-12 pr-4 py-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
           </div>
 
-          {/* Remember Me Checkbox */}
-          <div className="flex items-center">
+          {/* Confirm Password Input */}
+          <div className="relative">
+            <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
+              <Image
+                src="/login-page/password.svg"
+                alt="Confirm Password Icon"
+                width={20}
+                height={20}
+              />
+            </div>
             <input
-              type="checkbox"
-              id="rememberMe"
-              checked={rememberMe}
-              onChange={(e) => setRememberMe(e.target.checked)}
-              className="w-5 h-5 border-gray-300 rounded"
+              type="password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="*Confirm Password"
+              className="w-full pl-12 pr-4 py-3 border rounded-lg border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
             />
-            <label htmlFor="rememberMe" className="ml-2 text-gray-700">
-              Remember me
-            </label>
           </div>
 
-          {/* Login Button */}
+          {/* Sign Up Button */}
           <button
             type="submit"
             className="w-full py-3 px-4 bg-blue-600 text-white font-medium rounded-full hover:bg-blue-700 transition duration-200"
           >
-            Log In
+            Sign Up
           </button>
         </form>
 
-        {/* Sign Up Link */}
+        {/* Link ke halaman login */}
         <div className="mt-6 text-center">
           <button
-          type="button"
-            onClick={handleSignUp}
+            type="button"
+            onClick={() => router.push("/")}
             className="text-black font-medium hover:underline"
           >
-            Sign Up
+            Log In
           </button>
         </div>
       </div>
