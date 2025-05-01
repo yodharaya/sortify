@@ -1,9 +1,12 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { login } from "@/helpers/auth";
+import { toastServerError } from "@/helpers/server";
+import toast from "react-hot-toast";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -11,9 +14,17 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    router.push("/home");
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    try {
+      e.preventDefault();
+
+      await login(username, password);
+      toast.success("Login successful");
+
+      router.push("/");
+    } catch (error) {
+      toastServerError(error);
+    }
   };
 
   const handleSignUp = () => {
@@ -121,7 +132,7 @@ export default function LoginPage() {
         {/* Sign Up Link */}
         <div className="mt-6 text-center">
           <button
-          type="button"
+            type="button"
             onClick={handleSignUp}
             className="text-black font-medium hover:underline"
           >

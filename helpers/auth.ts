@@ -23,3 +23,11 @@ const hashPassword = async (password: string): Promise<string> => {
   const salt = await bcrypt.genSalt(Number(SALT_ROUNDS));
   return await bcrypt.hash(password, salt);
 };
+
+export const login = async (email: string, password: string) => {
+  const response = await axios.post(`${URL}/auth/login`, {
+    email,
+    password,
+  });
+  return response.data;
+};
