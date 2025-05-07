@@ -35,3 +35,12 @@ export const login = async (email: string, password: string) => {
   );
   return response.data;
 };
+
+export const verifyUser = async (token: string) => {
+  const response = await axios.post(
+    `${URL}/auth/verify-user`,
+    { token },
+    { withCredentials: true }
+  );
+  return response.data;
+};
