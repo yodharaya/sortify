@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { toastServerError } from "@/helpers/server";
 import { signup } from "@/helpers/auth";
 import toast from "react-hot-toast";
+import Logo from "@/components/navbar/logo";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -47,12 +48,7 @@ export default function RegisterPage() {
           </svg>
         </button>
         <div>
-          <Image
-            src="/all-page/logo.svg"
-            alt="Sortify Logo"
-            width={120}
-            height={36}
-          />
+          <Logo size={120} />
         </div>
       </div>
 

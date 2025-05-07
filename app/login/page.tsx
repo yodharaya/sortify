@@ -7,6 +7,7 @@ import { useState } from "react";
 import { login } from "@/helpers/auth";
 import { toastServerError } from "@/helpers/server";
 import toast from "react-hot-toast";
+import Logo from "@/components/navbar/logo";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -21,7 +22,7 @@ export default function LoginPage() {
       await login(username, password);
       toast.success("Login successful");
 
-      router.push("/");
+      router.replace("/");
     } catch (error) {
       toastServerError(error);
     }
@@ -53,12 +54,7 @@ export default function LoginPage() {
           </svg>
         </button>
         <div>
-          <Image
-            src="/all-page/logo.svg"
-            alt="Sortify Logo"
-            width={120}
-            height={36}
-          />
+          <Logo size={120} />
         </div>
       </div>
 

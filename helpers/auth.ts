@@ -44,3 +44,12 @@ export const verifyUser = async (token: string) => {
   );
   return response.data;
 };
+
+export const verifySession = async (token: string) => {
+  const response = await axios.post(
+    `${URL}/auth/verify-session`,
+    { token },
+    { withCredentials: true }
+  );
+  return response.data;
+};
