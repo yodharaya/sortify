@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import BottomBar from "@/components/bottom/bottomnav";
 
 export default function SettingsPage() {
   const router = useRouter();
@@ -14,22 +15,15 @@ export default function SettingsPage() {
   ];
 
   const moreMenuItems = [
-    { name: "Rate & Review", icon: "/setting-page/rate.svg", path: "/rate-review" },
     { name: "Help", icon: "/setting-page/help.svg", path: "/help" }
   ];
 
-  // Handle menu item click
   const handleMenuItemClick = (path: string) => {
     router.push(path);
   };
 
-  // Bottom navigation handler
-  const navigateTo = (path: string) => {
-    router.push(path);
-  };
-
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100">
+    <div className="flex flex-col min-h-screen bg-white">
       <header className="py-4 px-6 bg-white flex items-center">
         <Image
           src="/all-page/logo.svg"
@@ -62,7 +56,7 @@ export default function SettingsPage() {
           {accountMenuItems.map((item, index) => (
             <div 
               key={index} 
-              className={`flex items-center justify-between p-4 cursor-pointer ${
+              className={`flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition ${
                 index !== accountMenuItems.length - 1 ? "border-b border-gray-100" : ""
               }`}
               onClick={() => handleMenuItemClick(item.path)}
@@ -95,9 +89,7 @@ export default function SettingsPage() {
           {moreMenuItems.map((item, index) => (
             <div 
               key={index} 
-              className={`flex items-center justify-between p-4 cursor-pointer ${
-                index !== moreMenuItems.length - 1 ? "border-b border-gray-100" : ""
-              }`}
+              className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition"
               onClick={() => handleMenuItemClick(item.path)}
             >
               <div className="flex items-center">
@@ -121,70 +113,8 @@ export default function SettingsPage() {
         </div>
       </div>
 
-      {/* Scan Button */}
-      <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2">
-        <button className="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center shadow-lg">
-          <Image 
-            src="/all-page/bottom-bar/scan.svg" 
-            alt="Scan" 
-            width={24} 
-            height={24} 
-          />
-        </button>
-        <span className="text-xs text-center block mt-1 text-blue-600 font-medium">Scan!</span>
-      </div>
-
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white py-2 border-t border-gray-200 flex justify-around">
-        <div 
-          className="flex flex-col items-center cursor-pointer" 
-          onClick={() => navigateTo("/home")}
-        >
-          <Image 
-            src="/all-page/bottom-bar/home.svg" 
-            alt="Home" 
-            width={24} 
-            height={24} 
-          />
-          <span className="text-xs mt-1 text-gray-500">Home</span>
-        </div>
-        <div 
-          className="flex flex-col items-center cursor-pointer" 
-          onClick={() => navigateTo("/reward")}
-        >
-          <Image 
-            src="/all-page/bottom-bar/reward.svg" 
-            alt="Reward" 
-            width={24} 
-            height={24} 
-          />
-          <span className="text-xs mt-1 text-gray-500">Reward</span>
-        </div>
-        <div className="w-12"></div> {/* Spacer for scan button */}
-        <div 
-          className="flex flex-col items-center cursor-pointer" 
-          onClick={() => navigateTo("/history")}
-        >
-          <Image 
-            src="/all-page/bottom-bar/history.svg" 
-            alt="History" 
-            width={24} 
-            height={24} 
-          />
-          <span className="text-xs mt-1 text-gray-500">History</span>
-        </div>
-        <div 
-          className="flex flex-col items-center cursor-pointer"
-        >
-          <Image 
-            src="/all-page/bottom-bar/setting.svg" 
-            alt="Setting" 
-            width={24} 
-            height={24} 
-          />
-          <span className="text-xs mt-1 text-blue-600 font-medium">Setting</span>
-        </div>
-      </div>
+      {/* Import BottomBar component instead of using inline navigation */}
+      <BottomBar />
     </div>
   );
 }

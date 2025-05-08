@@ -1,31 +1,35 @@
 "use client"
 
 import Image from "next/image";
-import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { motion } from "framer-motion";
 
 export default function SplashScreen() {
   const router = useRouter();
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.push("/login"); // Ganti ke halaman tujuan setelah splash, misalnya /login
-    }, 4000); // 4 detik
+      router.push("/login");
+    }, 4000);
 
     return () => clearTimeout(timer);
   }, [router]);
 
   return (
-    <div className="flex items-center justify-center h-screen bg-[#3170AF]">
-      <div className="flex items-center space-x-2">
+    <div className="flex items-center justify-center h-screen bg-[#2874ba]">
+      <motion.div
+        initial={{ y: -100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+      >
         <Image
           src="/first-page/sortify-logo.svg"
           alt="Sortify Logo"
-          width={36}
-          height={36}
+          width={120}
+          height={120}
         />
-        <h1 className="text-white text-2xl font-bold tracking-widest">RTIFY</h1>
-      </div>
+      </motion.div>
     </div>
   );
 }
