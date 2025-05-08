@@ -6,7 +6,7 @@ import Link from "next/link";
 export default async function EmailVerificationSuccess({
   searchParams,
 }: {
-  searchParams: { token?: string };
+  searchParams: Promise<{ token?: string }>;
 }) {
   const param = await searchParams;
   const token = param.token;
@@ -18,6 +18,7 @@ export default async function EmailVerificationSuccess({
   try {
     await verifyUser(token);
   } catch (error) {
+    console.error("Verification error:", error);
     redirect("/error?message=Verification failed");
   }
 
