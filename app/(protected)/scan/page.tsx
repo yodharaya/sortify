@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 import BottomBar from "@/components/bottom/bottomnav";
 
 export default function ScanPage() {
@@ -10,15 +10,25 @@ export default function ScanPage() {
   useEffect(() => {
     const startCamera = async () => {
       try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: 'environment' }
-        });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
+        if (
+          typeof navigator !== "undefined" &&
+          navigator.mediaDevices &&
+          typeof navigator.mediaDevices.getUserMedia === "function"
+        ) {
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: { facingMode: "environment" },
+          });
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+          }
+        } else {
+          throw new Error("Camera API not supported in this browser.");
         }
       } catch (error) {
-        console.error('Camera error:', error);
-        setCameraError('Unable to access the camera. Please check your permissions.');
+        console.error("Camera error:", error);
+        setCameraError(
+          "Unable to access the camera. Please check your permissions and make sure you are using a secure (HTTPS) connection."
+        );
       }
     };
 
@@ -27,7 +37,7 @@ export default function ScanPage() {
     return () => {
       if (videoRef.current?.srcObject) {
         const tracks = (videoRef.current.srcObject as MediaStream).getTracks();
-        tracks.forEach(track => track.stop());
+        tracks.forEach((track) => track.stop());
       }
     };
   }, []);
