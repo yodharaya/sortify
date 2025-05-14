@@ -27,7 +27,11 @@ export default function BottomBar() {
     <>
       {/* Scan Button - positioned in the absolute center */}
       <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 z-20">
-        <button className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center shadow-lg transition-transform duration-200 hover:scale-110">
+      <button
+    onClick={() => navigateTo("/scan")}
+  className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center shadow-lg transition-transform duration-200 hover:scale-110"
+>
+
           <Image
             src="/all-page/bottom-bar/scan.svg"
             alt="Scan"
