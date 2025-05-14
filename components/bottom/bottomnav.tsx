@@ -17,21 +17,32 @@ export default function BottomBar() {
 
   // Modified the layout of menu items to match the screenshot
   const menuItems = [
-    { name: "Home", icon: "/all-page/bottom-bar/home.svg", path: "/home" },
-    { name: "Reward", icon: "/all-page/bottom-bar/reward.svg", path: "/reward" },
-    { name: "History", icon: "/all-page/bottom-bar/history.svg", path: "/history" },
-    { name: "Setting", icon: "/all-page/bottom-bar/setting.svg", path: "/setting" },
+    { name: "Home", icon: "/all-page/bottom-bar/home.svg", path: "/" },
+    {
+      name: "Reward",
+      icon: "/all-page/bottom-bar/reward.svg",
+      path: "/reward",
+    },
+    {
+      name: "History",
+      icon: "/all-page/bottom-bar/history.svg",
+      path: "/history",
+    },
+    {
+      name: "Setting",
+      icon: "/all-page/bottom-bar/setting.svg",
+      path: "/setting",
+    },
   ];
 
   return (
     <>
       {/* Scan Button - positioned in the absolute center */}
       <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 z-20">
-      <button
-    onClick={() => navigateTo("/scan")}
-  className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center shadow-lg transition-transform duration-200 hover:scale-110"
->
-
+        <button
+          onClick={() => navigateTo("/scan")}
+          className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center shadow-lg transition-transform duration-200 hover:scale-110"
+        >
           <Image
             src="/all-page/bottom-bar/scan.svg"
             alt="Scan"
@@ -68,7 +79,7 @@ export default function BottomBar() {
               {menuItems[0].name}
             </span>
           </div>
-          
+
           <div
             className="flex flex-col items-center cursor-pointer group"
             onClick={() => navigateTo(menuItems[1].path)}
@@ -92,7 +103,7 @@ export default function BottomBar() {
               {menuItems[1].name}
             </span>
           </div>
-          
+
           {/* Last two menu items (right side) */}
           <div
             className="flex flex-col items-center cursor-pointer group"
@@ -117,7 +128,7 @@ export default function BottomBar() {
               {menuItems[2].name}
             </span>
           </div>
-          
+
           <div
             className="flex flex-col items-center cursor-pointer"
             onClick={() => navigateTo(menuItems[3].path)}
