@@ -24,6 +24,7 @@ export default function LoginPage() {
 
       router.replace("/");
     } catch (error) {
+      console.log(error);
       toastServerError(error);
     }
   };
