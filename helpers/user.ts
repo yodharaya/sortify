@@ -11,7 +11,10 @@ export const getCurrentUser = async (
   cookieStore: ReadonlyRequestCookies
 ): Promise<User> => {
   try {
-    const token = cookieStore.get("auth_token")?.value;
+    const token = document.cookie
+  .split('; ')
+  .find((row) => row.startsWith('auth_token='))
+  ?.split('=')[1];
 
     if (!token) {
       throw new Error("Authentication token not found");
