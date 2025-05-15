@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 import { twMerge } from "tailwind-merge";
-import { Toaster } from 'react-hot-toast';
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900']
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -22,15 +22,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={twMerge(`${poppins.className} antialiased`, "w-screen h-screen", "bg-shade-white")}
+        className={twMerge(
+          `${poppins.className} antialiased`,
+          "w-screen h-screen",
+          "bg-shade-white"
+        )}
       >
-        <Toaster position="bottom-right" toastOptions={{
-          duration: 4000,
-          style: {
-            background: '#363636',
-            color: '#fff',
-          },
-        }} />
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: "#363636",
+              color: "#fff",
+            },
+          }}
+        />
         {children}
       </body>
     </html>

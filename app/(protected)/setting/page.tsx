@@ -1,25 +1,30 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import BottomBar from "@/components/bottom/bottomnav";
 
 export default function SettingsPage() {
   const router = useRouter();
+  const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
   // Menu items data
   const accountMenuItems = [
     { name: "Profile", icon: "/setting-page/profile.svg", path: "/profile" },
     { name: "Password", icon: "/setting-page/password.svg", path: "/password" },
-    { name: "Notifications", icon: "/setting-page/notif.svg", path: "/notifications" }
   ];
 
   const moreMenuItems = [
-    { name: "Help", icon: "/setting-page/help.svg", path: "/help" }
+    { name: "Help", icon: "/setting-page/help.svg", path: "/help" },
   ];
 
   const handleMenuItemClick = (path: string) => {
     router.push(path);
+  };
+
+  const toggleNotifications = () => {
+    setNotificationsEnabled((prev) => !prev);
   };
 
   return (
@@ -54,10 +59,12 @@ export default function SettingsPage() {
         <h3 className="text-lg font-bold mb-2">Account</h3>
         <div className="bg-white rounded-lg overflow-hidden">
           {accountMenuItems.map((item, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className={`flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition ${
-                index !== accountMenuItems.length - 1 ? "border-b border-gray-100" : ""
+                index !== accountMenuItems.length - 1
+                  ? "border-b border-gray-100"
+                  : ""
               }`}
               onClick={() => handleMenuItemClick(item.path)}
             >
@@ -79,6 +86,32 @@ export default function SettingsPage() {
               />
             </div>
           ))}
+
+          {/* Notifications with toggle */}
+          <div className="flex items-center justify-between p-4 border-t border-gray-100">
+            <div className="flex items-center">
+              <Image
+                src="/setting-page/notif.svg"
+                alt="Notifications"
+                width={24}
+                height={24}
+                className="mr-4"
+              />
+              <span>Notifications</span>
+            </div>
+            <button
+              onClick={toggleNotifications}
+              className={`w-14 h-7 flex items-center rounded-full p-1 transition-colors duration-300 ${
+                notificationsEnabled ? "bg-black" : "bg-gray-300"
+              }`}
+            >
+              <div
+                className={`w-5 h-5 bg-white rounded-full shadow-md transform transition-transform duration-300 ${
+                  notificationsEnabled ? "translate-x-7" : "translate-x-0"
+                }`}
+              />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -87,8 +120,8 @@ export default function SettingsPage() {
         <h3 className="text-lg font-bold mb-2">More</h3>
         <div className="bg-white rounded-lg overflow-hidden">
           {moreMenuItems.map((item, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50 transition"
               onClick={() => handleMenuItemClick(item.path)}
             >
