@@ -5,7 +5,28 @@ import BottomBar from "@/components/bottom/bottomnav";
 
 export default function ScanPage() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [cameraError, setCameraError] = useState<string | null>(null);
+  const [capturedImage, setCapturedImage] = useState<string | null>(null);
+  const [hasCaptured, setHasCaptured] = useState(false); // Agar hanya sekali capture
+
+  const captureImage = () => {
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+
+    if (video && canvas && !hasCaptured) {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const context = canvas.getContext("2d");
+      if (context) {
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const dataURL = canvas.toDataURL("image/png");
+        setCapturedImage(dataURL);
+        setHasCaptured(true); // Supaya tidak capture berulang
+        console.log("Image captured automatically");
+      }
+    }
+  };
 
   useEffect(() => {
     const startCamera = async () => {
@@ -20,6 +41,14 @@ export default function ScanPage() {
           });
           if (videoRef.current) {
             videoRef.current.srcObject = stream;
+
+            // Capture image otomatis setelah kamera siap
+            videoRef.current.onloadedmetadata = () => {
+              videoRef.current?.play();
+              setTimeout(() => {
+                captureImage();
+              }, 1000); // Tunggu 1 detik
+            };
           }
         } else {
           throw new Error("Camera API not supported in this browser.");
@@ -66,6 +95,20 @@ export default function ScanPage() {
       <div className="absolute inset-0 z-10 flex items-center justify-center">
         <div className="w-[70vw] h-[70vw] max-w-[320px] max-h-[320px] border-4 border-white rounded-lg bg-white bg-opacity-10 backdrop-blur-sm" />
       </div>
+
+      {/* Canvas tersembunyi */}
+      <canvas ref={canvasRef} className="hidden" />
+
+      {/* Tampilkan hasil gambar */}
+      {capturedImage && (
+        <div className="absolute top-20 right-4 z-30 w-32 h-32 border-2 border-white rounded-md overflow-hidden">
+          <img
+            src={capturedImage}
+            alt="Captured"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      )}
 
       {/* Pesan error */}
       {cameraError && (
