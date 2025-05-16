@@ -28,7 +28,7 @@ export default function ScanPage() {
         setCapturedImage(dataURL);
         setHasCaptured(true); // Supaya tidak capture berulang
         setTimeout(() => {
-          router.push("/output");
+          router.push("/scan-success");
         }, 2000);
         console.log("Image captured automatically");
       }
@@ -129,7 +129,7 @@ export default function ScanPage() {
       {/* Teks kiri atas */}
       <div className="absolute top-6 left-4 z-20">
         <h1 className="text-xl md:text-2xl font-bold text-white drop-shadow-[0_0_2px_white]">
-          Scan Your Trash Here
+          Verify Your Trash Can
         </h1>
       </div>
 

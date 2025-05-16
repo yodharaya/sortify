@@ -19,6 +19,11 @@ interface WeeklyProgressResponse {
   };
 }
 
+interface WasteClassificationResponse {
+  prediction: string;
+  confidence: number;
+}
+
 export const getWeeklyProgress = async (
   cookieStore: ReadonlyRequestCookies
 ): Promise<WeeklyProgressResponse> => {
@@ -38,6 +43,32 @@ export const getWeeklyProgress = async (
     return response.data as WeeklyProgressResponse;
   } catch (error) {
     console.error("Failed to fetch weekly progress data:", error);
+    throw error;
+  }
+};
+
+export const predictWaste = async (
+  imageFile: File
+): Promise<WasteClassificationResponse> => {
+  try {
+    const formData = new FormData();
+    formData.append("image", imageFile);
+
+    console.log("Sending image to backend:", imageFile);
+
+    const response = await axios.post(
+      "http://116.193.190.128:8001/waste-classification/efficientnet",
+      formData,
+      {
+        withCredentials: true,
+      }
+    );
+
+    console.log("Response from backend:", response.data);
+
+    return response.data as WasteClassificationResponse;
+  } catch (error) {
+    console.error("Failed to predict waste data:", error);
     throw error;
   }
 };
