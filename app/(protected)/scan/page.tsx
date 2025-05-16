@@ -27,6 +27,7 @@ export default function ScanPage() {
         const dataURL = canvas.toDataURL("image/png");
         setCapturedImage(dataURL);
         setHasCaptured(true); // Supaya tidak capture berulang
+        await sendImageToBackend(); // Kirim gambar ke backend
         setTimeout(() => {
           router.push("/output");
         }, 2000);
@@ -58,6 +59,7 @@ export default function ScanPage() {
       const imageFile = dataURLtoFile(capturedImage, "trash_image.png");
 
       const { prediction, confidence } = await predictWaste(imageFile);
+      console.log("Prediction:", prediction);
     } catch (error) {
       console.error("Failed to send image:", error);
     } finally {
