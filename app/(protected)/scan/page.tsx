@@ -2,15 +2,53 @@
 
 import { useEffect, useRef, useState } from "react";
 import BottomBar from "@/components/bottom/bottomnav";
+import { classifyWaste } from "@/helpers/waste";
+import { useRouter } from "next/navigation";
 
 export default function ScanPage() {
+  const router = useRouter();
+
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [cameraError, setCameraError] = useState<string | null>(null);
   const [capturedImage, setCapturedImage] = useState<string | null>(null);
-  const [hasCaptured, setHasCaptured] = useState(false); // Agar hanya sekali capture
+  const [hasCaptured, setHasCaptured] = useState(false);
+  const [isClassifying, setIsClassifying] = useState(false);
+  const [classificationError, setClassificationError] = useState<string | null>(
+    null
+  );
 
-  const captureImage = () => {
+  const base64ToFile = (base64String: string): File => {
+    const arr = base64String.split(",");
+    const mime = arr[0].match(/:(.*?);/)![1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], "captured-image.png", { type: mime });
+  };
+
+  const classifyImage = async (imageDataUrl: string): Promise<string> => {
+    try {
+      setIsClassifying(true);
+      setClassificationError(null);
+
+      const imageFile = base64ToFile(imageDataUrl);
+      const result = await classifyWaste(imageFile);
+      console.log("Classification result:", result);
+      return result;
+    } catch (error) {
+      console.error("Classification error:", error);
+      setClassificationError("Failed to classify image");
+      throw error;
+    } finally {
+      setIsClassifying(false);
+    }
+  };
+
+  const captureImage = async () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
 
@@ -22,8 +60,14 @@ export default function ScanPage() {
         context.drawImage(video, 0, 0, canvas.width, canvas.height);
         const dataURL = canvas.toDataURL("image/png");
         setCapturedImage(dataURL);
-        setHasCaptured(true); // Supaya tidak capture berulang
-        console.log("Image captured automatically");
+        setHasCaptured(true);
+
+        try {
+          const classificationId = await classifyImage(dataURL);
+          router.push(`/classification/${classificationId}`);
+        } catch (error) {
+          console.error("Failed to process image:", error);
+        }
       }
     }
   };
@@ -47,7 +91,7 @@ export default function ScanPage() {
               videoRef.current?.play();
               setTimeout(() => {
                 captureImage();
-              }, 1000); // Tunggu 1 detik
+              }, 3000); // Tunggu 1 detik
             };
           }
         } else {

@@ -41,3 +41,26 @@ export const getWeeklyProgress = async (
     throw error;
   }
 };
+
+export const classifyWaste = async (imageFile: File): Promise<string> => {
+  try {
+    const formData = new FormData();
+    formData.append("file", imageFile);
+
+    const response = await axios.post<{ classificationId: string }>(
+      `${URL}/waste/classify`,
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        withCredentials: true,
+      }
+    );
+
+    return response.data.classificationId;
+  } catch (error) {
+    console.error("Failed to classify waste:", error);
+    throw error;
+  }
+};
