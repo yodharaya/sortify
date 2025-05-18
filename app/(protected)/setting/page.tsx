@@ -4,9 +4,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import BottomBar from "@/components/bottom/bottomnav";
+import { useUser } from "@/context/user-context";
 
 export default function SettingsPage() {
   const router = useRouter();
+  const { user } = useUser();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
   // Menu items data
@@ -42,15 +44,15 @@ export default function SettingsPage() {
       <div className="mx-4 mt-4 bg-blue-600 rounded-lg p-4 flex items-center">
         <div className="w-12 h-12 rounded-full bg-gray-300 overflow-hidden mr-4">
           <Image
-            src="/api/placeholder/80/80"
+            src={user?.imageUrl || "/api/placeholder/80/80"}
             alt="Profile"
             width={80}
             height={80}
           />
         </div>
         <div className="text-white">
-          <h2 className="font-bold text-lg">Marshall Ajunna</h2>
-          <p className="text-sm">20,000 Points</p>
+          <h2 className="font-bold text-lg">{user?.name || "Loading..."}</h2>
+          <p className="text-sm">{user?.points || 0} Points</p>
         </div>
       </div>
 
