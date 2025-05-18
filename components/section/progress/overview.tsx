@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import SingleProgress from "./single-progress";
 import { cookies } from "next/headers";
-import { getWeeklyProgress } from "@/helpers/waste";
+import { getWeeklyProgress } from "@/helpers/classification";
 
 export default async function ProgressOverview() {
   const cookieStore = await cookies();
