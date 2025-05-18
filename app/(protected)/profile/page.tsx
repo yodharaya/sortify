@@ -5,15 +5,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useUser } from "@/context/user-context";
 import BottomBar from "@/components/bottom/bottomnav";
+import { editUser } from "@/helpers/user";
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const [username, setUsername] = useState(user!.name);
   const [gender, setGender] = useState("Prefer not to say");
   const [profilePic, setProfilePic] = useState(user!.imageUrl);
-
-  console.log("User data:", user);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -23,9 +22,23 @@ export default function ProfilePage() {
     }
   };
 
-  const handleSave = () => {
-    // Simpan logika simpan jika diperlukan
-    router.push("/setting"); // Kembali ke halaman setting
+  const handleSave = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("name", username);
+
+      if (profilePic.startsWith("blob:")) {
+        const response = await fetch(profilePic);
+        const blob = await response.blob();
+        formData.append("file", blob, "profile.jpg");
+      }
+
+      const updatedUser = await editUser(formData);
+      setUser(updatedUser);
+      router.push("/setting");
+    } catch (error) {
+      console.error("Failed to update profile:", error);
+    }
   };
 
   return (

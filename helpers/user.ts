@@ -31,3 +31,19 @@ export const getCurrentUser = async (
     throw error;
   }
 };
+
+export const editUser = async (formData: FormData): Promise<User> => {
+  try {
+    const response = await axios.patch(`${URL}/user/me`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
+    });
+
+    return response.data as User;
+  } catch (error) {
+    console.error("Failed to update user data:", error);
+    throw error;
+  }
+};
