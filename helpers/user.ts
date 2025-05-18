@@ -47,3 +47,19 @@ export const editUser = async (formData: FormData): Promise<User> => {
     throw error;
   }
 };
+
+interface PasswordUpdateData {
+  currentPassword: string;
+  newPassword: string;
+}
+
+export const editPassword = async (data: PasswordUpdateData): Promise<void> => {
+  try {
+    await axios.patch(`${URL}/user/password/mine`, data, {
+      withCredentials: true,
+    });
+  } catch (error) {
+    console.error("Failed to update password:", error);
+    throw error;
+  }
+};

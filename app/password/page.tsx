@@ -4,29 +4,37 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import BottomBar from "@/components/bottom/bottomnav";
+import { editPassword } from "@/helpers/user";
 
 export default function ChangePasswordPage() {
   const router = useRouter();
-  const [previousPassword, setPreviousPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleSave = () => {
-    // Validasi sederhana
-    if (!previousPassword || !newPassword || !confirmPassword) {
-      setError("All fields are required.");
-      return;
-    }
+  const handleSave = async () => {
+    try {
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        setError("All fields are required.");
+        return;
+      }
 
-    if (newPassword !== confirmPassword) {
-      setError("New passwords do not match.");
-      return;
-    }
+      if (newPassword !== confirmPassword) {
+        setError("New passwords do not match.");
+        return;
+      }
 
-    // Clear error dan redirect
-    setError("");
-    router.push("/setting");
+      await editPassword({
+        currentPassword,
+        newPassword,
+      });
+
+      setError("");
+      router.push("/setting");
+    } catch (error) {
+      setError("Failed to update password. Please try again.");
+    }
   };
 
   return (
@@ -53,12 +61,14 @@ export default function ChangePasswordPage() {
       {/* Form */}
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium mb-1">Previous Password</label>
+          <label className="block text-sm font-medium mb-1">
+            Current Password
+          </label>
           <input
             type="password"
             className="w-full border border-gray-300 rounded-lg px-4 py-2 bg-white"
-            value={previousPassword}
-            onChange={(e) => setPreviousPassword(e.target.value)}
+            value={currentPassword}
+            onChange={(e) => setCurrentPassword(e.target.value)}
           />
         </div>
 
@@ -73,7 +83,9 @@ export default function ChangePasswordPage() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1">*Confirm New Password</label>
+          <label className="block text-sm font-medium mb-1">
+            *Confirm New Password
+          </label>
           <input
             type="password"
             className="w-full border border-gray-300 rounded-lg px-4 py-2 bg-white"
