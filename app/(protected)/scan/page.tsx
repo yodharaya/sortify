@@ -18,6 +18,9 @@ export default function ScanPage() {
     null
   );
 
+  console.log("isClassifying", isClassifying);
+  console.log("classificationError", classificationError);
+
   const base64ToFile = (base64String: string): File => {
     const arr = base64String.split(",");
     const mime = arr[0].match(/:(.*?);/)![1];

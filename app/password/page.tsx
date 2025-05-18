@@ -33,6 +33,7 @@ export default function ChangePasswordPage() {
       setError("");
       router.push("/setting");
     } catch (error) {
+      console.error("Failed to update password:", error);
       setError("Failed to update password. Please try again.");
     }
   };
@@ -45,8 +46,8 @@ export default function ChangePasswordPage() {
           <Image
             src="/setting-page/back.svg"
             alt="Back"
-            width={24}
-            height={24}
+            width={10}
+            height={10}
           />
         </button>
         <h1 className="font-bold text-md">Change Password</h1>

@@ -55,8 +55,8 @@ export default function ProfilePage() {
               <Image
                 src="/setting-page/back.svg"
                 alt="Back"
-                width={24}
-                height={24}
+                width={10}
+                height={10}
               />
             </button>
             <Image
