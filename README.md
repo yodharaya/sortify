@@ -14,6 +14,9 @@
 - Yodha Raya Nayaala *(22/498215/TK/54641)*  
 - Muhammad Budi Setiawan *(22/505064/TK5524)*  
 
+Repository lain:
+1. `https://github.com/BrandonRafaelLovelyno/sortify-be`
+2. `https://github.com/mbudis23/waste-classification-api`
 ---
 
 ## 🌍 **Latar Belakang**  
