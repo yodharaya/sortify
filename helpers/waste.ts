@@ -1,10 +1,11 @@
 import axios from "axios";
-import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
-const URL =
-  process.env.NODE_ENV === "production"
-    ? process.env.NEXT_PUBLIC_PRODUCTION_URL
-    : process.env.NEXT_PUBLIC_DEVELOPMENT_URL;
+const getUrl = () => {
+  const isServer = typeof window === "undefined";
+  return isServer
+    ? process.env.INTERNAL_API_URL // server-side fetching
+    : process.env.NEXT_PUBLIC_API_URL; // client-side fetching
+};
 
 export const classifyWaste = async (imageFile: File): Promise<string> => {
   try {
@@ -12,7 +13,7 @@ export const classifyWaste = async (imageFile: File): Promise<string> => {
     formData.append("file", imageFile);
 
     const response = await axios.post<{ classificationId: string }>(
-      `${URL}/waste/classify`,
+      `${getUrl()}/waste/classify`,
       formData,
       {
         headers: {

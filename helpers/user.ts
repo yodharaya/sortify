@@ -2,10 +2,12 @@ import axios from "axios";
 import { User } from "@/context/user-context";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
-const URL =
-  process.env.NODE_ENV === "production"
-    ? process.env.NEXT_PUBLIC_PRODUCTION_URL
-    : process.env.NEXT_PUBLIC_DEVELOPMENT_URL;
+const getUrl = () => {
+  const isServer = typeof window === "undefined";
+  return isServer
+    ? process.env.INTERNAL_API_URL // server-side fetching
+    : process.env.NEXT_PUBLIC_API_URL; // client-side fetching
+};
 
 export const getCurrentUser = async (
   cookieStore: ReadonlyRequestCookies
@@ -17,7 +19,7 @@ export const getCurrentUser = async (
       throw new Error("Authentication token not found");
     }
 
-    const response = await axios.get(`${URL}/user/me`, {
+    const response = await axios.get(`${getUrl()}/user/me`, {
       headers: {
         Cookie: `auth_token=${token}`,
       },
@@ -34,7 +36,7 @@ export const getCurrentUser = async (
 
 export const editUser = async (formData: FormData): Promise<User> => {
   try {
-    const response = await axios.patch(`${URL}/user/me`, formData, {
+    const response = await axios.patch(`${getUrl()}/user/me`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -55,7 +57,7 @@ interface PasswordUpdateData {
 
 export const editPassword = async (data: PasswordUpdateData): Promise<void> => {
   try {
-    await axios.patch(`${URL}/user/password/mine`, data, {
+    await axios.patch(`${getUrl()}/user/password/mine`, data, {
       withCredentials: true,
     });
   } catch (error) {

@@ -1,17 +1,19 @@
 import axios from "axios";
 import bcrypt from "bcryptjs";
 
-const URL =
-  process.env.NODE_ENV === "production"
-    ? process.env.NEXT_PUBLIC_PRODUCTION_URL
-    : process.env.NEXT_PUBLIC_DEVELOPMENT_URL;
+const getUrl = () => {
+  const isServer = typeof window === "undefined";
+  return isServer
+    ? process.env.INTERNAL_API_URL // server-side fetching
+    : process.env.NEXT_PUBLIC_API_URL; // client-side fetching
+};
 
 const SALT_ROUNDS = process.env.SALT_ROUNDS || 10;
 
 export const signup = async (email: string, password: string, name: string) => {
   const hashedPassword = await hashPassword(password);
 
-  const response = await axios.post(`${URL}/auth/sign-up`, {
+  const response = await axios.post(`${getUrl()}/auth/sign-up`, {
     name,
     email,
     hashedPassword,
@@ -26,7 +28,7 @@ const hashPassword = async (password: string): Promise<string> => {
 
 export const login = async (email: string, password: string) => {
   const response = await axios.post(
-    `${URL}/auth/login`,
+    `${getUrl()}/auth/login`,
     {
       email,
       password,
@@ -38,7 +40,7 @@ export const login = async (email: string, password: string) => {
 
 export const verifyUser = async (token: string) => {
   const response = await axios.post(
-    `${URL}/auth/verify-user`,
+    `${getUrl()}/auth/verify-user`,
     { token },
     { withCredentials: true }
   );
@@ -47,7 +49,7 @@ export const verifyUser = async (token: string) => {
 
 export const verifySession = async (token: string) => {
   const response = await axios.post(
-    `${URL}/auth/verify-session`,
+    `${getUrl()}/auth/verify-session`,
     { token },
     { withCredentials: true }
   );

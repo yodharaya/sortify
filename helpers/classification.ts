@@ -1,10 +1,12 @@
 import axios from "axios";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
-const URL =
-  process.env.NODE_ENV === "production"
-    ? process.env.NEXT_PUBLIC_PRODUCTION_URL
-    : process.env.NEXT_PUBLIC_DEVELOPMENT_URL;
+const getUrl = () => {
+  const isServer = typeof window === "undefined";
+  return isServer
+    ? process.env.INTERNAL_API_URL // server-side fetching
+    : process.env.NEXT_PUBLIC_API_URL; // client-side fetching
+};
 
 interface Classification {
   wasteCategory: {
@@ -41,7 +43,7 @@ export const getClassificationById = async (
 ): Promise<{ category: string; binImage: string }> => {
   try {
     const response = await axios.get<Classification>(
-      `${URL}/classification/${classificationId}`
+      `${getUrl()}/classification/${classificationId}`
     );
 
     return {
@@ -65,7 +67,7 @@ export const getUserClassifications = async (
 
   try {
     const response = await axios.get<UserClassification[]>(
-      `${URL}/classification/mine`,
+      `${getUrl()}/classification/mine`,
       {
         headers: {
           Cookie: `auth_token=${token}`,
@@ -89,11 +91,14 @@ export const getWeeklyProgress = async (
   }
 
   try {
-    const response = await axios.get(`${URL}/classification/weekly-progress`, {
-      headers: {
-        Cookie: `auth_token=${token}`,
-      },
-    });
+    const response = await axios.get(
+      `${getUrl()}/classification/weekly-progress`,
+      {
+        headers: {
+          Cookie: `auth_token=${token}`,
+        },
+      }
+    );
 
     return response.data as WeeklyProgressResponse;
   } catch (error) {
