@@ -40,7 +40,7 @@ export default function BottomBar() {
       {/* Scan Button - positioned in the absolute center */}
       <div className="fixed bottom-16 left-1/2 transform -translate-x-1/2 z-20">
         <div
-          onClick={() => navigateTo("/scan")}
+          onClick={() => navigateTo("/scan-waste")}
           className="w-16 h-16 rounded-full bg-blue-600 flex items-center justify-center shadow-lg transition-transform duration-200 hover:scale-110 cursor-pointer"
         >
           <Image

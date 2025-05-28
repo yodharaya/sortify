@@ -34,7 +34,7 @@ export const getUserRewards = async (
 
     return response.data as Reward[];
   } catch (error) {
-    console.error("Failed to fetch user rewards:", error);
+    console.log("Failed to fetch user rewards:", error);
     throw error;
   }
 };

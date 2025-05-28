@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import BottomBar from "@/components/bottom/bottomnav";
 import { editPassword } from "@/helpers/user";
+import { toastServerError } from "@/helpers/server";
 
 export default function ChangePasswordPage() {
   const router = useRouter();
@@ -33,7 +34,7 @@ export default function ChangePasswordPage() {
       setError("");
       router.push("/setting");
     } catch (error) {
-      console.error("Failed to update password:", error);
+      toastServerError(error);
       setError("Failed to update password. Please try again.");
     }
   };

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getClassificationById } from "@/helpers/classification";
+import ScanTrashBinButton from "@/components/classification/scan-trash-bin-button";
 
 interface PageProps {
   params: Promise<{
@@ -13,7 +14,7 @@ export default async function ClassificationPage({ params }: PageProps) {
   const { binImage, category } = await getClassificationById(classificationId);
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 px-[48px] py-6 gap-[12px]">
+    <div className="flex flex-col min-h-screen items-center bg-gray-100 px-[48px] py-6 gap-[12px]">
       <div className="w-full flex justify-center">
         <Image
           src="/all-page/logo.svg"
@@ -37,6 +38,7 @@ export default async function ClassificationPage({ params }: PageProps) {
           <Image src={binImage} width={200} height={200} alt={category} />
         </div>
       </div>
+      <ScanTrashBinButton classificationId={classificationId} />
     </div>
   );
 }

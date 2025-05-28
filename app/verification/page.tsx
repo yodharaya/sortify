@@ -18,7 +18,6 @@ export default async function EmailVerificationSuccess({
   try {
     await verifyUser(token);
   } catch (error) {
-    console.error("Verification error:", error);
     redirect("/error?message=Verification failed");
   }
 

@@ -29,7 +29,7 @@ export const getCurrentUser = async (
 
     return user;
   } catch (error) {
-    console.error("Failed to fetch user data:", error);
+    console.log("Failed to fetch user data:", error);
     throw error;
   }
 };
@@ -45,7 +45,7 @@ export const editUser = async (formData: FormData): Promise<User> => {
 
     return response.data as User;
   } catch (error) {
-    console.error("Failed to update user data:", error);
+    console.log("Failed to update user data:", error);
     throw error;
   }
 };
@@ -61,7 +61,7 @@ export const editPassword = async (data: PasswordUpdateData): Promise<void> => {
       withCredentials: true,
     });
   } catch (error) {
-    console.error("Failed to update password:", error);
+    console.log("Failed to update password:", error);
     throw error;
   }
 };
