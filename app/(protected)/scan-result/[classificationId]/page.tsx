@@ -3,13 +3,14 @@ import Link from "next/link";
 import { getClassificationResult } from "@/helpers/classification";
 
 interface Props {
-  params: {
+  params: Promise<{
     classificationId: string;
-  };
+  }>;
 }
 
 export default async function ScanResultPage({ params }: Props) {
-  const result = await getClassificationResult(params.classificationId);
+  const { classificationId } = await params;
+  const result = await getClassificationResult(classificationId);
 
   const imageSrc = result.isSuccess
     ? "/scan-page/rewardscan.svg"
