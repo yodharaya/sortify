@@ -55,3 +55,40 @@ Sampah menjadi permasalahan mendesak di Yogyakarta dengan **270.153 ton sampah**
 
 ![WhatsApp Image 2025-02-20 at 22 27 07](https://github.com/user-attachments/assets/3982c8a8-96a6-4665-a798-d324d30b9433)
 
+## 🛠️ Instalasi menggunakan github
+Ikuti langkah-langkah di bawah ini untuk menjalankan Sortify secara lokal.
+1. Clone Repository
+   ```bash
+   git clone [https://github.com/yodharaya/sortify](https://github.com/yodharaya/sortify)
+   cd sortify
+   ```
+2. Install Dependecties
+   ```bash
+   npm install
+   ```
+3. Konfigurasi Environment
+   ```bash
+    NEXT_PUBLIC_PRODUCTION_URL=https://api.waste.my.id
+    NEXT_PUBLIC_DEVELOPMENT_URL=localhost:5000
+    INTERNAL_API_URL=https://api.waste.my.id
+    NEXT_PUBLIC_API_URL=https://api.waste.my.id
+   ```
+4. Menjalankan dalam mode developement
+   ```bash
+   npm run dev
+   ```
+
+beberapa berintah lain yaitu:
+```bash
+npm run dev
+npm run build
+npm start
+npm run linkt
+```
+
+## 🛠️ Instalasi menggunakan docker
+```bash
+docker build -t sortify-app .
+docker run -p 3000:3000 --env-file .env sortify-app
+```
+
