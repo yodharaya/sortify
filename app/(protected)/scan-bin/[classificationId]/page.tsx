@@ -73,7 +73,7 @@ export default function ScanTrashBin() {
           const result = await classifyImage(dataURL);
 
           if (result) {
-            router.push(`/classification/${result}`);
+            router.push(`/scan-result/${result}`);
           }
         } catch (error) {
           toastServerError(error);
