@@ -36,10 +36,8 @@ Sampah menjadi permasalahan mendesak di Yogyakarta dengan **270.153 ton sampah**
 **Sortify** hadir sebagai solusi berbasis **Computer Vision** untuk mengidentifikasi dan mengklasifikasikan sampah ke dalam **5 kategori**, sesuai dengan sistem pengelolaan sampah di Jerman:  
 
 ♻️ **Organik** – Sisa makanan, daun, dan bahan yang bisa terurai alami.  
-📄 **Kertas** – Kardus, majalah, dan produk berbasis kertas lainnya.  
-🛍 **Plastik** – Botol plastik, kemasan, dan sampah berbahan plastik.  
-🍾 **Kaca** – Botol dan pecahan kaca.  
-🛠 **Logam** – Kaleng dan barang berbahan dasar logam.  
+📄 **Anorganik** – Sisa produk yang tidak bisa terurai alami.
+🛍 **B3** – Berbau, Beracun, Berbahaya 
 
 🔍 Dengan teknologi ini, Sortify dapat membantu masyarakat **lebih mudah memilah sampah**, mengurangi jumlah sampah yang masuk ke TPA, serta meningkatkan efisiensi **daur ulang dan keberlanjutan lingkungan**.  
 
