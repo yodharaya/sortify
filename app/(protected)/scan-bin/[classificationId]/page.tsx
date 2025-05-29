@@ -2,11 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import BottomBar from "@/components/bottom/bottomnav";
-import { classifyWaste } from "@/helpers/waste";
-import { useRouter } from "next/navigation";
+import { classifyBin } from "@/helpers/classification";
+import { useParams, useRouter } from "next/navigation";
+import { toastServerError } from "@/helpers/server";
 
-export default function ScanPage() {
+export default function ScanTrashBin() {
   const router = useRouter();
+  const params = useParams();
+  const classificationId = params.classificationId as string;
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -33,19 +36,20 @@ export default function ScanPage() {
     return new File([u8arr], "captured-image.png", { type: mime });
   };
 
-  const classifyImage = async (imageDataUrl: string): Promise<string> => {
+  const classifyImage = async (
+    imageDataUrl: string
+  ): Promise<string | void> => {
     try {
       setIsClassifying(true);
       setClassificationError(null);
 
       const imageFile = base64ToFile(imageDataUrl);
-      const result = await classifyWaste(imageFile);
-      console.log("Classification result:", result);
+      const result = await classifyBin(imageFile, classificationId);
       return result;
     } catch (error) {
-      console.error("Classification error:", error);
+      toastServerError(error);
       setClassificationError("Failed to classify image");
-      throw error;
+      toastServerError(error);
     } finally {
       setIsClassifying(false);
     }
@@ -66,10 +70,13 @@ export default function ScanPage() {
         setHasCaptured(true);
 
         try {
-          const classificationId = await classifyImage(dataURL);
-          router.push(`/classification/${classificationId}`);
+          const result = await classifyImage(dataURL);
+
+          if (result) {
+            router.push(`/classification/${result}`);
+          }
         } catch (error) {
-          console.error("Failed to process image:", error);
+          toastServerError(error);
         }
       }
     }
@@ -101,7 +108,7 @@ export default function ScanPage() {
           throw new Error("Camera API not supported in this browser.");
         }
       } catch (error) {
-        console.error("Camera error:", error);
+        toastServerError(error);
         setCameraError(
           "Unable to access the camera. Please check your permissions and make sure you are using a secure (HTTPS) connection."
         );

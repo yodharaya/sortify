@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useUser } from "@/context/user-context";
 import BottomBar from "@/components/bottom/bottomnav";
 import { editUser } from "@/helpers/user";
+import { toastServerError } from "@/helpers/server";
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -37,7 +38,7 @@ export default function ProfilePage() {
       setUser(updatedUser);
       router.push("/setting");
     } catch (error) {
-      console.error("Failed to update profile:", error);
+      toastServerError(error);
     }
   };
 

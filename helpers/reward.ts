@@ -1,10 +1,12 @@
 import axios from "axios";
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies";
 
-const URL =
-  process.env.NODE_ENV === "production"
-    ? process.env.NEXT_PUBLIC_PRODUCTION_URL
-    : process.env.NEXT_PUBLIC_DEVELOPMENT_URL;
+const getUrl = () => {
+  const isServer = typeof window === "undefined";
+  return isServer
+    ? process.env.INTERNAL_API_URL // server-side fetching
+    : process.env.NEXT_PUBLIC_API_URL; // client-side fetching
+};
 
 interface Reward {
   id: string;
@@ -24,7 +26,7 @@ export const getUserRewards = async (
       throw new Error("Authentication token not found");
     }
 
-    const response = await axios.get(`${URL}/reward/mine`, {
+    const response = await axios.get(`${getUrl()}/reward/mine`, {
       headers: {
         Cookie: `auth_token=${token}`,
       },
@@ -32,7 +34,7 @@ export const getUserRewards = async (
 
     return response.data as Reward[];
   } catch (error) {
-    console.error("Failed to fetch user rewards:", error);
+    console.log("Failed to fetch user rewards:", error);
     throw error;
   }
 };
